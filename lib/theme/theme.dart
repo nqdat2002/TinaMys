@@ -44,7 +44,7 @@ class AppTheme {
         surface: DarkColor.background,
         background: DarkColor.background,
         error: Colors.red,
-        onPrimary: DarkColor.white,
+        onPrimary: Color.fromARGB(255, 0, 0, 0),
         onSecondary: DarkColor.darkBlue,
         onSurface: DarkColor.white,
         onBackground: DarkColor.titleTextColor,
@@ -57,8 +57,7 @@ class AppTheme {
   static TextStyle subTitleStyle =
   const TextStyle(color: LightColor.subTitleTextColor, fontSize: 12);
 
-  static TextStyle h1Style =
-  const TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
+  static TextStyle h1Style = const TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
   static TextStyle h2Style = const TextStyle(fontSize: 22);
   static TextStyle h3Style = const TextStyle(fontSize: 20);
   static TextStyle h4Style = const TextStyle(fontSize: 18);

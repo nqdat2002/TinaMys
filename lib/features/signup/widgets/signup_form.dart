@@ -157,8 +157,8 @@ class _SignupFormState extends State<SignupForm> {
                 setState(() {});
               },
               validator: (data) {
-                RegExp regex = RegExp(
-                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                // RegExp regex = RegExp(
+                //     r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                 var passNonNullValue = data ?? "";
                 if (passNonNullValue.isEmpty) {
                   return ("Vui lòng nhập mật khẩu");

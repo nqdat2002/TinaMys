@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tinamys/bloc/auth/auth_bloc.dart';
 import 'package:tinamys/bloc/auth/auth_event.dart';
+import 'package:tinamys/bloc/theme/theme_bloc.dart';
+import 'package:tinamys/bloc/theme/theme_event.dart';
+import 'package:tinamys/bloc/theme/theme_state.dart';
 import 'package:tinamys/services/user/user_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -35,120 +38,130 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _headerWidget(context),
-            const SizedBox(
-              height: 15,
-            ),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
+          bool val = false;
+          if (state is SelectedTheme) {
+            val = state.themeType == ThemeType.Light ? true : false;
+          }
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                _headerWidget(context),
+                const SizedBox(
+                  height: 15,
+                ),
 
-            // working space
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: const Text(
-                "Không gian làm việc",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            _workingSpace(context),
-            const SizedBox(
-              height: 15,
-            ),
-
-            // settting space
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: const Text(
-                "Cài đặt",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-
-            // setting colum
-            _setting(context),
-
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(5),
-              child: const Text(
-                "Phiên bản MYS v1.6.0",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                    color: Colors.white),
-              ),
-            ),
-
-            const SizedBox(
-              height: 15,
-            ),
-            Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/intro');
-                },
-                child: const Text(
-                  'Được cung cấp bởi Tinasoft',
-                  style: TextStyle(
-                    color: Colors.blueAccent,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    decoration: TextDecoration.underline,
-                    decorationStyle: TextDecorationStyle.solid,
-                    decorationColor: Colors.blueAccent,
+                // working space
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: const Text(
+                    "Không gian làm việc",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
                   ),
                 ),
-              ),
-            ),
+                const SizedBox(
+                  height: 10,
+                ),
+                _workingSpace(context),
+                const SizedBox(
+                  height: 15,
+                ),
 
-            const SizedBox(
-              height: 15,
-            ),
-
-            // logout button
-            Container(
-              height: 45,
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: ElevatedButton(
-                onPressed: () {
-                  context.read<AuthenticationBloc>().add(AuthenticationLogoutRequest());
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(1.0),
+                // settting space
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: const Text(
+                    "Cài đặt",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
                   ),
                 ),
-                child: const Text(
-                  'Đăng xuất',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14),
-                )
-              )
+                const SizedBox(
+                  height: 10,
+                ),
+
+                // setting colum
+                _setting(context, val),
+
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(5),
+                  child: Text(
+                    "Phiên bản MYS v1.6.0",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        color: Theme.of(context).colorScheme.onBackground),
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/intro');
+                    },
+                    child: const Text(
+                      'Được cung cấp bởi Tinasoft',
+                      style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        decoration: TextDecoration.underline,
+                        decorationStyle: TextDecorationStyle.solid,
+                        decorationColor: Colors.blueAccent,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 15,
+                ),
+
+                // logout button
+                Container(
+                    height: 45,
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          context
+                              .read<AuthenticationBloc>()
+                              .add(AuthenticationLogoutRequest());
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(1.0),
+                          ),
+                        ),
+                        child: const Text(
+                          'Đăng xuất',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14),
+                        ))),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
-            const SizedBox(height: 10,),
-          ],
-        ),
-      ),
+          );
+        }
+      )
     );
   }
 
@@ -156,6 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return _profile == null
         ? const Center(child: CircularProgressIndicator())
         : GestureDetector(
+            onTap: () => Navigator.pushNamed(context, "/edit_profile", arguments: _profile),
             child: Container(
               padding: const EdgeInsets.all(10.0),
               color: Colors.blueAccent,
@@ -221,7 +235,8 @@ class _ProfilePageState extends State<ProfilePage> {
     },
   );
 
-  Widget buildIconSwitch(BuildContext context) {
+  Widget buildIconSwitch(BuildContext context,
+      {Color color = Colors.black, int index = 0}) {
     return Switch(
       // This bool value toggles the switch.
       value: isMode,
@@ -233,14 +248,19 @@ class _ProfilePageState extends State<ProfilePage> {
           //   print(isMode);
           // }
         });
+        if (index == 1) {
+          BlocProvider.of<ThemeBloc>(context)
+              .add(isMode ? DarkMode() : LightMode());
+        }
       },
       thumbIcon: thumbIcon,
     );
   }
 
-  Widget buildSwitchChangeLanguague(BuildContext context) {
-    return Container(
-        color: Colors.black,
+  Widget buildSwitchChangeMode(BuildContext context, bool change) {
+    return 
+      Container(
+        color: Theme.of(context).colorScheme.onPrimary,
         margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 3.0),
         child: ListTile(
           iconColor: Colors.blueAccent,
@@ -248,15 +268,16 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text(
             'Chế độ ${isMode ? "sáng" : "tối"}',
           ),
-          trailing: buildIconSwitch(context),
-        ));
+          trailing: buildIconSwitch(context, index: 1),
+        )
+      );
   }
 
   // sub menu for select language
   Widget buildListWithSubMenu(
       BuildContext context, IconData icon, String label) {
     return Container(
-        color: Colors.black,
+        color: Theme.of(context).colorScheme.onPrimary,
         margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 3.0),
         child: ExpansionTile(
           leading: Icon(
@@ -292,12 +313,30 @@ class _ProfilePageState extends State<ProfilePage> {
               onTap: () {},
             ),
           ],
-        ));
+        )
+      );
   }
 
   Widget buildListTile(BuildContext context, IconData icon, String label) {
     return Container(
-      color: Colors.black,
+      color: Theme.of(context).colorScheme.onPrimary,
+      margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 3.0),
+      child: ListTile(
+        iconColor: Colors.blueAccent,
+        leading: Icon(icon),
+        title: Text(label),
+        trailing: const Icon(
+          Icons.keyboard_arrow_right_outlined,
+          color: Colors.white,
+        ),
+        onTap: () {},
+      ),
+    );
+  }
+
+  Widget buildDeleteAccount(BuildContext context, IconData icon, String label) {
+    return Container(
+      color: Theme.of(context).colorScheme.onPrimary,
       margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 3.0),
       child: ListTile(
         iconColor: Colors.blueAccent,
@@ -318,7 +357,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget buildChangeFontText(
       BuildContext context, IconData icon, String label) {
     return Container(
-      color: Colors.black,
+      color: Theme.of(context).colorScheme.onPrimary,
       margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 3.0),
       child: ListTile(
         iconColor: Colors.blueAccent,
@@ -394,10 +433,10 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _setting(BuildContext context) {
+  Widget _setting(BuildContext context, bool editable) {
     return Column(
       children: <Widget>[
-        buildSwitchChangeLanguague(context),
+        buildSwitchChangeMode(context, editable),
         buildListWithSubMenu(context, Icons.language_outlined, "Ngôn ngữ"),
         buildListTile(context, Icons.code_outlined, 'Hướng dẫn sử dụng'),
         buildListTile(context, Icons.web_outlined, 'Trang web'),
@@ -406,8 +445,7 @@ class _ProfilePageState extends State<ProfilePage> {
         buildListTile(context, Icons.sms_rounded, 'Liên hệ trợ giúp'),
         buildListTile(context, Icons.security_outlined, 'Điều khoản dịch vụ'),
         buildChangeFontText(context, Icons.settings, 'Cài đặt phông chữ'),
-        buildListTile(
-            context, Icons.person_remove_alt_1_outlined, 'Xóa tài khoản'),
+        buildDeleteAccount(context, Icons.person_remove_alt_1_outlined, 'Xóa tài khoản'),
       ],
     );
   }

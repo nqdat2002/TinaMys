@@ -43,11 +43,12 @@ class AuthenticationBloc
       case AuthenticationStatus.unauthenticated:
         return emit(const AuthenticationState.unauthenticated());
       case AuthenticationStatus.authenticated:
-        final user = User(username: 'admin', password: 'admin_deptrai');
+        const user = User(username: 'admin', password: 'admin_deptrai');
         return emit(
-          user != null
-              ? AuthenticationState.authenticated(user)
-              : const AuthenticationState.unauthenticated(),
+          const AuthenticationState.authenticated(user)
+          // user != null
+          //     ? AuthenticationState.authenticated(user)
+          //     : const AuthenticationState.unauthenticated(),
         );
       case AuthenticationStatus.unknown:
         return emit(const AuthenticationState.unknown());
