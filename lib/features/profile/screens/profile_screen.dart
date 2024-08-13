@@ -132,28 +132,30 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 // logout button
                 Container(
-                    height: 45,
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          context
-                              .read<AuthenticationBloc>()
-                              .add(AuthenticationLogoutRequest());
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(1.0),
-                          ),
+                  height: 45,
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<AuthenticationBloc>()
+                            .add(AuthenticationLogoutRequest());
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(1.0),
                         ),
-                        child: const Text(
-                          'Đăng xuất',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14),
-                        ))),
+                      ),
+                      child: const Text(
+                        'Đăng xuất',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14),
+                      )
+                    )
+                  ),
                 const SizedBox(
                   height: 10,
                 ),

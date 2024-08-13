@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tinamys/features/profile/widgets/edit_profile_form.dart';
 
 class EditProfilePage extends StatefulWidget{
   const EditProfilePage({super.key});
@@ -9,10 +8,24 @@ class EditProfilePage extends StatefulWidget{
 }
 
 class _EditProfileState extends State<EditProfilePage>{
-  
+
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
+  bool _editable = false;
+
+  @override
+  void initState() {
+    _editable = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final Map my_profile = ModalRoute.of(context)!.settings.arguments as Map;
+    final Map profile = ModalRoute.of(context)!.settings.arguments as Map;
     
     return Scaffold(
       appBar: AppBar(
@@ -24,13 +37,156 @@ class _EditProfileState extends State<EditProfilePage>{
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          Padding(padding: EdgeInsets.all(10.0), child: Icon(Icons.edit, color: Colors.blueAccent,),)
+          // _editable ? 
+          Padding(
+            padding: const EdgeInsets.all(10.0), 
+            child: IconButton(
+              icon: const Icon(Icons.edit, color: Colors.blueAccent,), 
+              onPressed: (){
+                setState(() {
+                  _editable = !_editable;
+                });
+              }
+            )
+          )
+          // : Container(),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(10),
-        child: EditProfileForm(profile: my_profile),
+        padding: const EdgeInsets.all(10),
+        child: editProfileForm(context, profile),
       )
+    );
+  }
+
+  // fill to form that can edit or not. Can be editable if you checked to edit icon!
+  Widget editProfileForm(BuildContext context, Map<dynamic, dynamic> profile){
+    return Form(
+      key: _formKey,
+      child: Column(children: <Widget>[
+        Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(10),
+          child: Image.network(
+            profile['avatar']!,
+            errorBuilder: (context, error, stackTrace) {
+              return Image.network(
+                "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png?20200919003010",
+                width: 60.0,
+                height: 60.0,
+              );
+            },
+            width: 60.0,
+            height: 60.0,
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: const Text(
+            "Họ và tên",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: TextFormField(
+            initialValue: profile['fullName']!,
+            controller: nameController,
+            enabled: _editable,
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 0.0),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                hintText: "Họ và tên"),
+            onChanged: (data) {
+              // if (_editable){
+              //   nameController.text = data;
+              // }
+              setState(() {
+
+              });
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: const Text(
+            "Tên tài khoản",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: TextFormField(
+            initialValue: profile['username']!,
+            controller: usernameController,
+            enabled: _editable,
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 0.0),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                hintText: "Tên tài khoản"),
+          ),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: const Text(
+            "Số Điện thoại",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: TextFormField(
+            initialValue: "0948669343",
+            controller: phoneNumberController,
+            enabled: _editable,
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 0.0),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                hintText: "Số điện thoại"),
+          ),
+        ),
+        const SizedBox(height: 15,),
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: const Text(
+            "Email",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: TextFormField(
+            initialValue: profile['email'],
+            controller: emailController,
+            enabled: _editable,
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 0.0),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                hintText: "Email"),
+          ),
+        ),
+      ]),
     );
   }
 }

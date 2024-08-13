@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tinamys/services/user/user_service.dart';
 
 class EditProfileForm extends StatefulWidget {
   final Map<dynamic, dynamic> profile;
@@ -19,7 +18,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
-  bool _editable = false;
+  final bool _editable = false;
 
   // Map<String, dynamic>? _profile;
   // late UserServices userServices;
@@ -34,6 +33,11 @@ class _EditProfileFormState extends State<EditProfileForm> {
   @override
   void initState() {
     super.initState();
+    if (widget.profile['name']!= null){
+      nameController.text = widget.profile['name'];
+    }
+
+    
     // userServices = UserServices();
     // fetchData();
   }
@@ -79,6 +83,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: TextFormField(
             controller: nameController,
+            enabled: _editable,
             decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey, width: 0.0),
@@ -105,6 +110,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: TextFormField(
             controller: usernameController,
+            enabled: _editable,
             decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey, width: 0.0),
@@ -128,6 +134,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: TextFormField(
             controller: phoneNumberController,
+            enabled: _editable,
             decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey, width: 0.0),
@@ -149,6 +156,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: TextFormField(
             controller: emailController,
+            enabled: _editable,
             decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey, width: 0.0),
