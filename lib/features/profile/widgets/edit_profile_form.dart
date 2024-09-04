@@ -45,6 +45,10 @@ class _EditProfileFormState extends State<EditProfileForm> {
   @override
   void dispose() {
     super.dispose();
+    nameController.dispose();
+    usernameController.dispose();
+    emailController.dispose();
+    phoneNumberController.dispose();
   }
 
   @override

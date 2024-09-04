@@ -15,6 +15,7 @@ class _CompanyPageState extends State<CompanyPage> {
     'email': 'contact@larafashion.com',
     'website': 'https://www.larafashion.com',
   };
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

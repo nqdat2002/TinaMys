@@ -293,6 +293,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   : Icons.keyboard_arrow_up_outlined,
               color: Colors.white),
           onExpansionChanged: (bool expanding) =>
+          
               setState(() => isExpanded = expanding),
           children: [
             ListTile(

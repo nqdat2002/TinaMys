@@ -21,4 +21,10 @@ class UserServices{
     }
     return {"Error": "Not found"};
   }
+
+  Future <bool> updateUserProfile(Map<String, String> newUserInfor) async{
+    
+    
+    return false;
+  }
 }

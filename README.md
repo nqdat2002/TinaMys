@@ -1,6 +1,6 @@
 # tinamys
 
-A new Flutter project.
+A clone TinaMYS application with Flutter.
 
 ## Getting Started
 
