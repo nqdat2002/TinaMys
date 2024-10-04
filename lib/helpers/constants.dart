@@ -1,3 +1,3 @@
 class Constants{
-  static String baseAPI = 'https://dev.mys.tinasoft.com.vn/api/v1';
+  static String baseAPI = 'your-api-url';
 }
